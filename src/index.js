@@ -13,33 +13,52 @@ const propertyData = {
     firstName: 'Tom'
   }
 }
-
+/* 
+  getDataを呼び出して、mainEl.innerHTMLを利用して、結果を出力します。
+*/
 function handleClick(e) {
   e.preventDefault();
   const mainEl = document.getElementById('main');
-  /* 
-    getDataを呼び出して、mainEl.innerHTMLを利用して、結果を出力します。
-  */
+  mainEl.innerHTML = getData;  //★ここ２行が曖昧
 }
 
-function getData() {
-  /* 
-    fetchDataを呼び出して、戻ってきたデータのsuccessの値を元にresolveで物件データまたは、rejectでエラーメッセージを返す。
-  */
+/* 
+  fetchDataを呼び出して、戻ってきたデータのsuccessの値を元にresolveで物件データまたは、rejectでエラーメッセージを返す。
+*/
+
+
+function getData() {　//★この関数が曖昧
+
+  fetchData
+    .then(function(value) {
+      console.log(value[1]);
+    })
+
+    .catch(function(value) {
+      console.log(value[1]);
+    });
 }
 
+
+/* 
+  lodashのrandom()を使って、80%の確率で正しいデータを返し、20%の確率でエラーを返すようにしましょう。
+  またsetTimeoutを利用して、1秒待ってから結果を得るようにします。
+*/
 function fetchData() {
-  /* 
-    lodashのrandom()を使って、80%の確率で正しいデータを返し、20%の確率でエラーを返すようにしましょう。
-    またsetTimeoutを利用して、1秒待ってから結果を得るようにします。
-  */
-return new Promise((resolve, reject) => {
-  const random = _.random(propertyData['']);
-  if (random === random.length * 0.8) {
-  setTimeout(() => resolve("success: true, propertyData: propertyData"), 1000);
-  } else {
-    setTimeout(() => reject("success: false, message: データの取得に失敗しました。"), 1000);
-  }
+  return new Promise((resolve, reject) => {
+    const random = _.random(4/5);
+    const result = doSomething();
+    if (result === propertyData.length * random) {
+      setTimeout(() => resolve({
+        success: true,
+        propertyData: propertyData
+        }), 1000);
+    } else {
+      setTimeout(() => reject({ 
+        success: false,
+        message: 'データの取得に失敗しました。' 
+      }), 1000);
+    }
   });
 }
 
