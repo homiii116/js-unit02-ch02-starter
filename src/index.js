@@ -19,7 +19,7 @@ const propertyData = {
 function handleClick(e) {
   e.preventDefault();
   const mainEl = document.getElementById('main');
-  mainEl.innerHTML = getData;  //★ここ２行が曖昧
+  // mainEl.innerHTML = getData;  //★ここ２行が曖昧
 }
 
 /* 
@@ -27,17 +27,17 @@ function handleClick(e) {
 */
 
 
-function getData() {　//★この関数が曖昧
+function getData() {　
 
-  fetchData
-    .then(function(value) {
-      console.log(value[1]);
-    })
-
-    .catch(function(value) {
-      console.log(value[1]);
-    });
+  fetchData.then((data) => {
+    if (data.success) {
+      resolve(propertyData['']);
+    } else {
+      reject('データの取得に失敗しました。')   ;
+    }
+  })
 }
+
 
 
 /* 
@@ -46,19 +46,20 @@ function getData() {　//★この関数が曖昧
 */
 function fetchData() {
   return new Promise((resolve, reject) => {
-    const random = _.random(4/5);
-    const result = doSomething();
-    if (result === propertyData.length * random) {
-      setTimeout(() => resolve({
-        success: true,
-        propertyData: propertyData
-        }), 1000);
-    } else {
-      setTimeout(() => reject({ 
-        success: false,
-        message: 'データの取得に失敗しました。' 
-      }), 1000);
-    }
+    setTimeout(() => {
+      const random = _.random(1, 5);
+      if (random <= 4) {
+        resolve({
+          success: true,
+          propertyData: propertyData
+        });
+      } else {
+        reject({ 
+          success: false,
+          message: 'データの取得に失敗しました。' 
+        });
+      } 
+    }, 1000); 
   });
 }
 
