@@ -19,27 +19,28 @@ const propertyData = {
 function handleClick(e) {
   e.preventDefault();
   const mainEl = document.getElementById('main');
-  // mainEl.innerHTML = getData;  //★ここ２行が曖昧
-}
+  
+  getData.then((result) => {
+    mainEl.innerHTML = result;
+  });
 
+  getData.catch((error) => {
+    mainEl.innerHTML = error;
+  });
+}
 /* 
   fetchDataを呼び出して、戻ってきたデータのsuccessの値を元にresolveで物件データまたは、rejectでエラーメッセージを返す。
 */
-
-
 function getData() {　
 
   fetchData.then((data) => {
     if (data.success) {
-      resolve(propertyData['']);
+      resolve(Object.entires(propertyData));
     } else {
-      reject('データの取得に失敗しました。')   ;
+      reject('データの取得に失敗しました。');
     }
-  })
+  });
 }
-
-
-
 /* 
   lodashのrandom()を使って、80%の確率で正しいデータを返し、20%の確率でエラーを返すようにしましょう。
   またsetTimeoutを利用して、1秒待ってから結果を得るようにします。
