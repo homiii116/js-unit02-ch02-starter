@@ -16,31 +16,36 @@ const propertyData = {
 /* 
   getDataを呼び出して、mainEl.innerHTMLを利用して、結果を出力します。
 */
-function handleClick(e) {
-  e.preventDefault();
-  const mainEl = document.getElementById('main');
+// function handleClick(e) {
+//   e.preventDefault();
+//   const mainEl = document.getElementById('main');
   
-  getData.then((result) => {
-    mainEl.innerHTML = result;
-  });
+//   getData()
+//     .then((result) => {      
+//       mainEl.innerHTML = result;
+//       document.body = mainEl;
+//     })
 
-  getData.catch((error) => {
-    mainEl.innerHTML = error;
-  });
-}
+//     .catch((error) => {
+//       mainEl.innerHTML = error;
+//       document.body = mainEl;
+//     })
+// }
 /* 
   fetchDataを呼び出して、戻ってきたデータのsuccessの値を元にresolveで物件データまたは、rejectでエラーメッセージを返す。
 */
-function getData() {　
 
-  fetchData.then((data) => {
+function getData(){　
+  fetchData().then((data) => {
     if (data.success) {
-      resolve(Object.entires(propertyData));
+      resolve(data.propertyData);
     } else {
-      reject('データの取得に失敗しました。');
+      reject(data.message);
     }
   });
 }
+getData();
+
 /* 
   lodashのrandom()を使って、80%の確率で正しいデータを返し、20%の確率でエラーを返すようにしましょう。
   またsetTimeoutを利用して、1秒待ってから結果を得るようにします。
@@ -64,7 +69,7 @@ function fetchData() {
   });
 }
 
-{
-  const button1 = document.getElementById('button1');
-  button1.addEventListener("click", handleClick);
-}
+// {
+//   const button1 = document.getElementById('button1');
+//   button1.addEventListener("click", handleClick);
+// }
